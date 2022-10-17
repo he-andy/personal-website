@@ -35,9 +35,6 @@ import Gallerys from "react-photo-gallery";
 
 // ];
 
-
-const num_img = 8;
-
 const Content = {
   // height: "700px",
   display: "inline-flex",
@@ -46,36 +43,23 @@ const Content = {
   overflowX: "scroll",
   whiteSpace: "nowrap",
 };
-class Picture extends React.Component {
-  map_photo(i) {
-    const path = `/static/images/${i + 1}.jpg`;
-    var img = new Image();
-    img.src = path
-    const ret =
-    {
-      src: path,
-      width: img.width,
-      height: img.height,
-    };
-    console.log(ret)
-    return ret
-  }
 
+class Picture extends React.Component {
   constructor() {
     super();
-    const photos = [...Array(num_img).keys()].map(x => this.map_photo(x));
+    var photos = require('./photos.json');
     this.state = {
       photos: photos
         .map(value => ({ value, sort: Math.random() }))
         .sort((a, b) => a.sort - b.sort)
         .map(({ value }) => value)
     };
+    console.log(this.state.photos)
   }
 
   render() {
-    console.log(this.state.photos)
     return (
-      <main>
+      <div className="gallery">
         <h3>Gear</h3>
         <p>Currenty shooting on a Nikon Z6 with a 50mm or 35mm f/1.8. </p>
         <div className="hr"></div>
@@ -83,7 +67,7 @@ class Picture extends React.Component {
         <div style={Content}>
           <Gallerys direction={"row"} margin={5} photos={this.state.photos} />
         </div>
-      </main >
+      </div>
 
     );
   }
